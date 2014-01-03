@@ -55,8 +55,11 @@ class RateLimiter:
             self.reset = json.loads(content)["resources"]["search"]["/search/tweets"]["reset"]
             self.remaining = json.loads(content)["resources"]["search"]["/search/tweets"]["remaining"]
         else:
-            self.reset = response["x-rate-limit-reset"]
-            self.remaining = response["x-rate-limit-remaining"]
+            try: 
+                self.reset = response["x-rate-limit-reset"] 
+	        self.remaining = response["x-rate-limit-remaining"]
+            except:
+                pass
 
         logging.info("new rate limit remaining=%s and reset=%s", self.remaining, self.reset)
 
